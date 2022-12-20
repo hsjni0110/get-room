@@ -7,8 +7,8 @@ function Home() {
 
   const [region, setRegion] = useState('');
   const [RegionShape, setResionShage] = useState('');
-
-
+  const [Explanation, setExplanation] = useState('');
+  const [description, setDescription] = useState('웹 구조 상 정보를 받아오는데 시간이 걸립니다. (300개 기준 5분, 1000개 기준 15분정도)');
   const handleRegion = (e:any) => {
     e.preventDefault();
 
@@ -18,18 +18,19 @@ function Home() {
   /* 방 찾기 메서드 */
   const SearchRoom = (e:any) => {
     e.preventDefault();
+    setDescription('진행 현황');
 
     let payload = {
       region: region,
-      regionShape: RegionShape
+      regionShape: '2',
     }
 
     ipcRenderer.send('get-room', payload)
   }
 
   useEffect(() => {
-    ipcRenderer.on('room-list', (e: any, payload) => {
-      setRegion(payload)
+    ipcRenderer.on('explanation', (e: any, payload) => {
+      setExplanation(payload);
     })
   }, [ipcRenderer])
 
@@ -50,18 +51,18 @@ function Home() {
             </div>
             <div>
               <h3 className='text-center'>방 형태</h3>
-              <select className='shadow-lg rounded-[10px] mt-2 text-[#000000] w-full py-1 px-2' value={RegionShape} onChange={(e:any) => { setResionShage(e.target.value )}}>
-                <option value={1}>빌라/주택</option>
-                <option value={2}>원룸/투룸</option>
-              </select>
+              <div className='shadow-lg rounded-[10px] mt-2 text-[#000000] w-full py-1 px-2 bg-white'>
+                원룸/투룸
+              </div>
             </div>
             <button className='bg-[#242424] shadow-lg rounded-[8px] py-2' onClick={SearchRoom}>검색하기</button>
           
         </div>
 
         {/* right */}
-        <div className='bg-white w-full rounded-[20px] ml-3'>
-
+        <div className='bg-white w-full rounded-[20px] ml-3 flex items-center flex-col justify-center'>
+          <p className='text-center font-semibold text-[#000000]'>{description}</p>
+          <p className='text-center text-[#000000]'>{Explanation}</p>
         </div>
       </div>
     </React.Fragment>

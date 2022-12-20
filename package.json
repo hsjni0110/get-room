@@ -11,11 +11,13 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
     "exceljs": "^4.3.0",
     "express": "^4.18.2",
     "file-server": "^2.2.1",
+    "iconv-lite": "^0.6.3",
     "playwright": "^1.28.1"
   },
   "devDependencies": {
